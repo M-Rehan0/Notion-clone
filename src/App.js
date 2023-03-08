@@ -1,5 +1,59 @@
+import React from 'react';
+import { useEffect, useState } from "react";
+import uuid from "react-uuid";
+import "./App.css"
+import Editor from "./Editor";
+import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
+
 function App() {
-  return <h1>Lotion</h1>;
+  const [notes, setNotes] = useState(
+    localStorage.notes ? JSON.parse(localStorage.notes) : []
+  );
+  const [activeNote, setActiveNote] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
+
+  const onAddNote = () => {
+    const newNote = {
+      id: uuid(),
+      title: "Untitled Note",
+      body: "",
+      lastModified: Date.now(),
+    };
+
+    setNotes([newNote, ...notes]);
+    setActiveNote(newNote.id);
+  };
+
+  const onDeleteNote = (noteId) => {
+    const answer = window.confirm("Are you sure?");
+    if (answer) {
+        setNotes(notes.filter(({ id }) => id !== noteId));
+    }
+
+  };
+
+
+  return (
+    <div className="Main">
+      <div className="nav">
+        <Navbar />
+      </div>
+      <div className="App">
+        <Sidebar
+          notes={notes}
+          onAddNote={onAddNote}
+          onDeleteNote={onDeleteNote}
+          activeNote={activeNote}
+          setActiveNote={setActiveNote}
+        />
+        <Editor activeNote={getActiveNote()} onUpdateNote={onUpdateNote} />
+      </div>
+    </div>
+  );
 }
 
 export default App;
