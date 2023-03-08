@@ -36,6 +36,21 @@ function App() {
 
   };
 
+  const onUpdateNote = (updatedNote) => {
+    const updatedNotesArr = notes.map((note) => {
+      if (note.id === updatedNote.id) {
+        return updatedNote;
+      }
+
+      return note;
+    });
+
+    setNotes(updatedNotesArr);
+  };
+
+  const getActiveNote = () => {
+    return notes.find(({ id }) => id === activeNote);
+  };
 
   return (
     <div className="Main">
