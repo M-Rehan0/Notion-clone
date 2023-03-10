@@ -16,14 +16,10 @@
     display: inline;
 } 
 
-.nav a {
+.nav button {
   font-weight: bold;
-  text-decoration: none;
-  font-size: x-large;
-}
-
-.nav a:hover {
-  background-color: #5A5A5A;
+  font-size: large;
+  color: black;
 }
 
 .nav span {
